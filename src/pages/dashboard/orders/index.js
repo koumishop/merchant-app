@@ -1,11 +1,9 @@
 import Header from '@/components/Header'
 import Resume from '@/components/Resume'
 import { Montserrat } from 'next/font/google'
-import { DataGrid } from '@mui/x-data-grid'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
-import TableCell, { tableCellClasses } from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
+import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { useState } from 'react'
@@ -262,9 +260,6 @@ export default function Dashboard() {
         setOrderNum(order);
         console.log("order num : ", order, " items : ", items, " total : ", total, " currency : ", currency);
     }
-    const myLoader=({src})=>{
-        return `${src}`;
-      }
 
     return(
         <main className={montserrat.className}>
