@@ -18,6 +18,9 @@ module.exports = {
       'secondary':'#8D99AE',
       'alt-secondary': '#D9D9D9',
       'dark': '#070111',
+      'blue': '#3A86FF',
+      'green': '#2EC4B6',
+      'pink-red': '#EF476F'
     },
   },
   plugins: [],
