@@ -6,8 +6,6 @@ import { Icon } from '@iconify/react'
 import Header from '@/components/Header'
 import React,{ useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-//import { useFormik, FormikProvider, Form } from 'formik'
-import * as Yup from 'yup'
 import axios, { AxiosError, isAxiosError } from 'axios'
 import Alert from '@mui/material/Alert'
 import IconButton from '@mui/material/IconButton'
@@ -38,9 +36,9 @@ export default function Home() {
       myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg");
       
       var formdata = new FormData();
-      formdata.append("password", "123456");
+      formdata.append("password", password);
       formdata.append("accesskey", "90336");
-      formdata.append("mobile", "0815824641");
+      formdata.append("mobile", phone);
       formdata.append("login", "1");
       formdata.append("fcm_id", "");
       
@@ -52,147 +50,25 @@ export default function Home() {
       };
       
       fetch("https://webadmin.koumishop.com/seller/api/api-v1.php", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
+        .then(response => response.json())
+        .then((result)=>{
+          console.log("***** response : ", result);
+         const { id, name, store_name, email, balance,} = result.data[0];
+          localStorage.setItem("userId",id);
+          localStorage.setItem("userEmail",email);
+          localStorage.setItem("serviceName",name);
+          localStorage.setItem("storeName",store_name);
+          localStorage.setItem("isConnected", true)
+          console.log("balance : ", result.data[0].balance);
+          router.push('/dashboard/orders');
+
+        })
+        .catch(error => { 
+          setHasError(true);
+          console.log("***** error : ",error );
+        });
 
     }
-
-      // var header = new Headers();
-      // header.append('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg');
- 
-      // axios.post(`${process.env.NEXT_PUBLIC_API_URL}`, { accesskey:90336, login:1, mobile:phone, password:password }, ) //{headers: {Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg'}} //,'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg'
-      // .then((response)=>{ 
-      //   console.log("***** response : ", response)
-      //   // const { id, accessToken, firstName, phone, role, company} = response.data;
-        
-      //   // localStorage.setItem("userId",id);
-      //   // localStorage.setItem("token",accessToken);
-      //   // localStorage.setItem("firstName",firstName);
-      //   // localStorage.setItem("phone",phone);
-      //   // localStorage.setItem("role",role);
-      //   // localStorage.setItem("isConnected",true);
-
-      //   // console.log(`user ${localStorage.getItem("firstName")} is connected`);
-        
-      //  })
-      // .catch((error)=>{ 
-      //   setHasError(true);
-      //   // setErrorStatus(error.response.status);
-      //   console.log('error : ', error, ' status : ', error.response);
-
-      //   // if(error.response.status){
-      //   //   setErrorStatus(error.response.status);
-      //   // } else {
-      //   //   setErrorStatus(error);
-      //   // }
-      // })
-     
-
-
-
-
-      // var data = new FormData();
-      // data.append('password', '123456');
-      // data.append('accesskey', '90336');
-      // data.append('mobile', '0815824641');
-      // data.append('login', '1');
-      // data.append('fcm_id', '');      
-      //console.log(data.getHeaders());
-      // var header = new Headers();
-      // header.append('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg');
-    //   var config = {
-    //     method: 'post',
-    //   maxBodyLength: Infinity,
-    //     url: 'https://webadmin.koumishop.com/seller/api/api-v1.php',
-    //     headers: {'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg', 'Accept':'application/json, text/plain, /', 'Access-Control-Allow-Origin':'*', 'Access-Control-Allow-Methods':'GET, PUT, POST,PATCH, DELETE, OPTIONS', 'Content-type':'application/json'},
-    //     data : { accesskey:90336, login:1, mobile:phone, password:password }
-    //   };
-
-    //   axios(config)
-    //   .then(function (response) {
-    //     console.log(JSON.stringify(response.data));
-    //   })
-    //   .catch(function (error) {
-    //     console.log("**** error : ",error);
-    //   });
-    // }
-  
-
-
-
-  // const LoginSchema = Yup.object().shape({ 
-  //   phone: Yup.string().required("votre numéro de telephone est requis"),
-  //   password: Yup.string().min(5, "votre mot de passe doit avoir au moins 5 caractères").required("votre mot de passe est requis")
-  //  });
-
-  // const formik = useFormik({ 
-  //   initialValues: { 
-  //     phone:"",
-  //     password:"",
-  //    },
-  //    validationSchema: LoginSchema,
-  //    onSubmit: ({ phone, password })=>{ 
-  //     setHasError(false);
-  //     setErrorStatus("");
-
-  //     var data = new FormData();
-  //     data.append('password', '123456');
-  //     data.append('accesskey', '90336');
-  //     data.append('mobile', '0815824641');
-  //     data.append('login', '1');
-  //     data.append('fcm_id', '');
-
-      // var config = {
-      //   method: 'post',
-      // maxBodyLength: Infinity,
-      //   url: 'https://webadmin.koumishop.com/seller/api/api-v1.php',
-      //   headers: { 
-      //     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg', 
-      //     ...data.getHeaders()
-      //   },
-      //   data : data
-      // };
-
-      // axios(config)
-      // .then(function (response) {
-      //   console.log(JSON.stringify(response.data));
-      // })
-      // .catch(function (error) {
-      //   console.log("**** error : ",error);
-      // });
-
-
-  //     // axios.post(`${process.env.NEXT_PUBLIC_API_URL}`, { accesskey:90336, login:1, mobile:phone, password:password } )
-  //     // .then((response)=>{ 
-  //     //   console.log("***** response : ", response)
-  //     //   // const { id, accessToken, firstName, phone, role, company} = response.data;
-        
-  //     //   // localStorage.setItem("userId",id);
-  //     //   // localStorage.setItem("token",accessToken);
-  //     //   // localStorage.setItem("firstName",firstName);
-  //     //   // localStorage.setItem("phone",phone);
-  //     //   // localStorage.setItem("role",role);
-  //     //   // localStorage.setItem("isConnected",true);
-
-  //     //   // console.log(`user ${localStorage.getItem("firstName")} is connected`);
-        
-  //     //  })
-  //     // .catch((error)=>{ 
-  //     //   setHasError(true);
-  //     //   // setErrorStatus(error.response.status);
-  //     //   console.log('error : ', error, ' status : ', error.response);
-
-  //     //   // if(error.response.status){
-  //     //   //   setErrorStatus(error.response.status);
-  //     //   // } else {
-  //     //   //   setErrorStatus(error);
-  //     //   // }
-  //     // })
-  //    }
-
-  // }); 
-  // const {errors, touched, getFieldProps} = formik;
 
   return (
     <>
