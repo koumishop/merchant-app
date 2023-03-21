@@ -27,19 +27,30 @@ export default function Dashboard() {
     const [orderTotal, setOrderTotal] = useState("");
     const [orderCurrency, setOrderCurrency] = useState("");
     const [orderNum, setOrderNum] = useState("");
-    const seller = localStorage.getItem("userId");
-    const orderQuery = useQuery(['order'], async ()=>{
-        return await axios.post('https://webadmin.koumishop.com/seller/api/api-v1.php',
-        {
-            "accesskey":'90336',
-            "get_orders": '1',
-            "seller_id": seller
+    const fetcher = async ()=>{ 
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg");
+        const seller = localStorage.getItem("userId");
+        var formdata = new FormData();
+        formdata.append("accesskey", "90336");
+        formdata.append("seller_id", seller);
+        formdata.append("get_orders", "1");
+        
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: formdata,
+          redirect: 'follow'
+        };
 
-        }, 
-        {headers: { 
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg',
-        }},)
-    })
+        const response = await fetch("https://webadmin.koumishop.com/seller/api/api-v1.php", requestOptions)
+        const data = await response.json();
+        console.log("******** orders : ",data );
+        return data;
+        
+    }
+    const {data:orderData, isLoading:isOrderDataLoading} = useQuery(['order'], ()=>fetcher())
+    //console.log("****** orderQuery : ", orderData.data);
     const user =[
         {
             id: "9",
@@ -296,7 +307,7 @@ export default function Dashboard() {
                                     </TableRow>                                    
                                 </TableHead>
                                 <TableBody>
-                                {data.map((row, idx)=>(
+                                {orderData?.data.map((row, idx)=>(
                                     <TableRow key={idx}>
                                         <TableCell className={`w-[12%] ${montserrat.className} text-base`}>{row.id}</TableCell>
                                         <TableCell className={`w-[25%] ${montserrat.className} text-base`}>{row.date_added.split(" ")[0]}</TableCell>
