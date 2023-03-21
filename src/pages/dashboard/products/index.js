@@ -2,6 +2,7 @@ import Header from '@/components/Header'
 import Resume from '@/components/Resume'
 import { Montserrat } from 'next/font/google'
 import Image from 'next/image'
+import { useQuery } from '@tanstack/react-query'
 
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -9,6 +10,30 @@ export default function Product() {
     const myLoader=({src})=>{
         return `${src}`;
     }
+    const fetcher = async ()=>{ 
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg");
+        const seller = localStorage.getItem("userId");
+        var formdata = new FormData();
+        formdata.append("accesskey", "90336");
+        formdata.append("seller_id", seller);
+        formdata.append("get_products", "1");
+        
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: formdata,
+          redirect: 'follow'
+        };
+
+        const response = await fetch("https://webadmin.koumishop.com/seller/api/api-v1.php", requestOptions)
+        const data = await response.json();
+        console.log("******** products : ",data );
+        return data;
+        
+    }
+    const {data:productData, isLoading:isProductDataLoading} = useQuery(['product'], ()=>fetcher())
+    //console.log("****** productQuery : ", productData.data);
     const user =[
         {
             id: "9",
@@ -441,14 +466,14 @@ export default function Product() {
     return(
         <main className={montserrat.className}>
             <Header hasSignedIn={true} />
-            <section className='md:flex md:flex-col md:w-full md:h-[92%] md:items-center md:justify-between bg-white'>
+            <section className='md:flex md:flex-col md:w-full md:h-[92%] md:items-start md:justify-between bg-white'>
                 <div className='w-full md:ml-[10%] md:my-[4%]'>
                     <Resume cashAmount={user[0].balance} itemsAmount={80} orderAmount={data.length}/>
                 </div>
-                <div className='md:w-[42.3%] text-dark bg-alt-secondary'>
+                <div className='md:w-[42.3%] md:ml-[12%] text-dark bg-alt-secondary'>
             <h2 className='p-4 w-full font-medium'>Produits</h2>
             <div className='md:w-full md:pb-4 text-dark bg-alt-secondary'>
-                {product.map((item, idx)=>(
+                {productData?.data.map((item, idx)=>(
                     <div key={idx} className='w-[95%] px-2 py-4 mx-4 mb-2 flex bg-white'>
                         <div className='w-1/3'><Image loader={myLoader} src={item.image} width={400} height={400} alt="item ordered picture" className='w-full h-full'/></div>
                         <div className='w-1/3 pl-2'>
