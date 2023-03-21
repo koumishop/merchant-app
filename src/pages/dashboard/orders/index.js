@@ -10,7 +10,6 @@ import { useState } from 'react'
 import OrderDetail from '@/components/OrderDetail'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 
 
 const columns = [
