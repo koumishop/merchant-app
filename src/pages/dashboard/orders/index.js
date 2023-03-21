@@ -9,7 +9,8 @@ import TableRow from '@mui/material/TableRow'
 import { useState } from 'react'
 import OrderDetail from '@/components/OrderDetail'
 import { Icon } from '@iconify/react'
-
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
 
 
 const columns = [
@@ -26,6 +27,19 @@ export default function Dashboard() {
     const [orderTotal, setOrderTotal] = useState("");
     const [orderCurrency, setOrderCurrency] = useState("");
     const [orderNum, setOrderNum] = useState("");
+    const seller = localStorage.getItem("userId");
+    const orderQuery = useQuery(['order'], async ()=>{
+        return await axios.post('https://webadmin.koumishop.com/seller/api/api-v1.php',
+        {
+            "accesskey":'90336',
+            "get_orders": '1',
+            "seller_id": seller
+
+        }, 
+        {headers: { 
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg',
+        }},)
+    })
     const user =[
         {
             id: "9",
