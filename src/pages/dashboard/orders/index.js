@@ -6,6 +6,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import Badge from '@mui/material/Badge';
 import { useState } from 'react'
 import OrderDetail from '@/components/OrderDetail'
 import { Icon } from '@iconify/react'
@@ -26,6 +27,7 @@ export default function Dashboard() {
     const [orderTotal, setOrderTotal] = useState("");
     const [orderCurrency, setOrderCurrency] = useState("");
     const [orderNum, setOrderNum] = useState("");
+    const [badgeInvisibility, setBadgeInvisibility] = useState(false);
     const fetcher = async ()=>{ 
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg");
@@ -49,20 +51,33 @@ export default function Dashboard() {
         
     }
     const {data:orderData, isLoading:isOrderDataLoading} = useQuery(['order'], ()=>fetcher())
-    //console.log("****** orderQuery : ", orderData.data);
+
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+      }
+
+    function formatDate(date) {
+        return [
+          padTo2Digits(date.getDate()),
+          padTo2Digits(date.getMonth() + 1),
+          date.getFullYear(),
+        ].join('-');
+      }
+    console.log("today : ", formatDate(new Date()));
 
     const handleOrderDetail = (currency, items, total, order)=>{
         setOrderCurrency(currency);
         setOrderItems(items);
         setOrderTotal(total);
         setOrderNum(order);
+        setBadgeInvisibility(true);
         console.log("order num : ", order, " items : ", items, " total : ", total, " currency : ", currency);
     }
 
     return(
         <main className={montserrat.className}>
             <Header hasSignedIn={true} />
-            <section className='md:flex md:flex-col md:w-full md:items-center md:justify-between bg-white'>
+            <section className='md:flex md:flex-col md:w-full md:items-center md:pb-8 md:h-screen bg-white'>
                 <div className='w-full md:ml-[10%] md:my-[4%]'>
                     <Resume/>
                 </div>
@@ -82,7 +97,7 @@ export default function Dashboard() {
                                 <TableBody>
                                 {orderData?.data.map((row, idx)=>(
                                     <TableRow key={idx}>
-                                        <TableCell className={`w-[12%] ${montserrat.className} text-base`}>{row.id}</TableCell>
+                                        <TableCell className={`w-[12%] ${montserrat.className} text-base`}>{formatDate(new Date())==row.date_added.split(" ")[0]? <Badge invisible={badgeInvisibility} variant='dot' color='primary' className='mr-2'/>:<></>}{row.id}</TableCell>
                                         <TableCell className={`w-[25%] ${montserrat.className} text-base`}>{row.date_added.split(" ")[0]}</TableCell>
                                         <TableCell className={` ${montserrat.className} text-base`}>{row.user_name}</TableCell>
                                         <TableCell className={`w-[25%] ${montserrat.className} text-base`}>{ new Intl.NumberFormat('fr-FR', { style: 'currency', currency: `${row.currency}` }).format(parseInt(row.total))}</TableCell>
