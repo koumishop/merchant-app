@@ -45,8 +45,8 @@ export default function Product() {
                     <h2 className='p-4 w-full font-medium'>Produits</h2>
                     <div className='md:w-full md:pb-4 md:flex md:flex-wrap text-dark bg-alt-secondary'>
                         {productData?.data.map((item, idx)=>(
-                            <div key={idx} className='w-[45%] px-2 py-4 mx-4 mb-2 flex bg-white'>
-                                <div className='w-1/3'><Image loader={myLoader} src={item.image} width={400} height={400} alt="item ordered picture" className='w-full h-full'/></div>
+                            <div key={idx} className='w-[45%] h-[185px] px-2 py-4 mx-4 mb-2 flex bg-white'>
+                                <div className='w-1/3'><Image loader={myLoader} src={item.image} width={400} height={400} alt="item ordered picture" className='object-cover w-full h-full'/></div>
                                 <div className='w-1/3 pl-2'>
                                     <h3 className='font-semibold'>{item.name}</h3>
                                     <div>Unité : {`${item.variants[0].measurement} ${item.variants[0].measurement_unit_name}`}</div>
