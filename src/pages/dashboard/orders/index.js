@@ -129,6 +129,7 @@ export default function Dashboard() {
                             page={page}
                             onPageChange={handleChangePage}
                             onRowsPerPageChange={handleChangeRowsPerPage}
+                            labelRowsPerPage="Nombre de lignes par page : "
                             />
                         </div>
                     </div>
