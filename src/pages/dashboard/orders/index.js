@@ -77,24 +77,24 @@ export default function Dashboard() {
     return(
         <main className={montserrat.className}>
             <Header hasSignedIn={true} />
-            <section className='md:flex md:flex-col md:w-full md:items-center md:pb-8 md:h-screen bg-white'>
+            <section className='md:flex md:flex-col md:w-full md:items-center md:pb-8 bg-white'>
                 <div className='w-full md:ml-[10%] md:my-[4%]'>
                     <Resume/>
                 </div>
                 <div className='w-[95%] md:ml-[10%] md:flex items-start'>
                     <div className='md:w-[55%]'>
                         <div style={{ height: '100%', width: '100%' }}>
-                            <Table>
-                                <TableHead className='bg-alt-secondary'>
+                            <Table stickyHeader >
+                                <TableHead className='bg-alt-secondary border border-primary'>
                                     <TableRow >
-                                        <TableCell className={`w-[12%] ${montserrat.className} text-base`}>N°</TableCell>
-                                        <TableCell className={`w-[25%] ${montserrat.className} text-base`}>Date commande</TableCell>
-                                        <TableCell className={`${montserrat.className} text-base`}>Client</TableCell>
-                                        <TableCell className={`w-[25%] ${montserrat.className} text-base`}>Montant</TableCell>
-                                        <TableCell className={`w-[5%] ${montserrat.className} text-base`}></TableCell>
+                                        <TableCell className={`w-[12%] ${montserrat.className} text-base bg-alt-secondary`}>N°</TableCell>
+                                        <TableCell className={`w-[25%] ${montserrat.className} text-base bg-alt-secondary`}>Date commande</TableCell>
+                                        <TableCell className={`${montserrat.className} text-base bg-alt-secondary`}>Client</TableCell>
+                                        <TableCell className={`w-[25%] ${montserrat.className} text-base bg-alt-secondary`}>Montant</TableCell>
+                                        <TableCell className={`w-[5%] ${montserrat.className} text-base bg-alt-secondary`}></TableCell>
                                     </TableRow>                                    
                                 </TableHead>
-                                <TableBody>
+                                <TableBody className='w-full max-h-[245px] overflow-y-auto'>
                                 {orderData?.data.map((row, idx)=>(
                                     <TableRow key={idx}>
                                         <TableCell className={`w-[12%] ${montserrat.className} text-base`}>{formatDate(new Date())==row.date_added.split(" ")[0]? <Badge invisible={badgeInvisibility} variant='dot' color='primary' className='mr-2'/>:<></>}{row.id}</TableCell>

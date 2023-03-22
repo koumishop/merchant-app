@@ -12,10 +12,10 @@ export default function OrderDetail ({items, total, currency, id}){
     : 
         <div className='md:w-[42.3%] text-dark bg-alt-secondary'>
             <h2 className='p-4 w-full font-medium'>Détails commande n° {id}</h2>
-            <div className='md:w-full md:pb-4 text-dark bg-alt-secondary'>
+            <div className='md:w-full md:max-h-[405px] md:pb-4 text-dark bg-alt-secondary overflow-y-auto'>
                 {items.map((item, idx)=>(
-                    <div key={idx} className='w-[95%] px-2 py-4 mx-4 mb-2 flex bg-white'>
-                        <div className='w-1/3'><Image loader={myLoader} src={item.image} width={400} height={400} alt="item ordered picture" className='w-full h-full'/></div>
+                    <div key={idx} className='w-[95%] h-[185px] px-2 py-4 mx-4 mb-2 flex bg-white'>
+                        <div className='w-[160px] h-[149px%]'><Image loader={myLoader} src={item.image} width={400} height={400} alt="item ordered picture" className='object-cover w-full h-full'/></div>
                         <div className='w-1/3 pl-2'>
                             <h3 className='font-semibold'>{item.name}</h3>
                             <div>Unité : {item.variant_name}</div>
