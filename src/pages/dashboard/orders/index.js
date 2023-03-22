@@ -107,7 +107,7 @@ export default function Dashboard() {
                                     </TableRow>                                    
                                 </TableHead>
                                 <TableBody className='w-full max-h-[245px] overflow-y-auto'>
-                                {(rowsPerPage > 0 //orderData?.data
+                                {!orderData?<TableRow><TableCell>Aucune donnée disponible</TableCell></TableRow> :(rowsPerPage > 0 //orderData?.data
                                     ? orderData?.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     : orderData?.data
                                 ).map((row, idx)=>(
@@ -124,7 +124,7 @@ export default function Dashboard() {
                             <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={orderData?.data.length}
+                            count={orderData? orderData?.data.length : 0}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}
