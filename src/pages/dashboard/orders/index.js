@@ -84,14 +84,14 @@ export default function Dashboard() {
                 <div className='w-[95%] md:ml-[10%] md:flex items-start'>
                     <div className='md:w-[55%]'>
                         <div style={{ height: '100%', width: '100%' }}>
-                            <Table stickyHeader >
-                                <TableHead className='bg-alt-secondary border border-primary'>
+                            <Table >
+                                <TableHead className='bg-alt-secondary'>
                                     <TableRow >
-                                        <TableCell className={`w-[12%] ${montserrat.className} text-base bg-alt-secondary`}>N°</TableCell>
-                                        <TableCell className={`w-[25%] ${montserrat.className} text-base bg-alt-secondary`}>Date commande</TableCell>
-                                        <TableCell className={`${montserrat.className} text-base bg-alt-secondary`}>Client</TableCell>
-                                        <TableCell className={`w-[25%] ${montserrat.className} text-base bg-alt-secondary`}>Montant</TableCell>
-                                        <TableCell className={`w-[5%] ${montserrat.className} text-base bg-alt-secondary`}></TableCell>
+                                        <TableCell className={`w-[12%] ${montserrat.className} text-base`}>N°</TableCell>
+                                        <TableCell className={`w-[25%] ${montserrat.className} text-base`}>Date commande</TableCell>
+                                        <TableCell className={`${montserrat.className} text-base`}>Client</TableCell>
+                                        <TableCell className={`w-[25%] ${montserrat.className} text-base`}>Montant</TableCell>
+                                        <TableCell className={`w-[5%] ${montserrat.className} text-base`}></TableCell>
                                     </TableRow>                                    
                                 </TableHead>
                                 <TableBody className='w-full max-h-[245px] overflow-y-auto'>
