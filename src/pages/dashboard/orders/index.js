@@ -6,6 +6,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import TablePagination from '@mui/material/TablePagination'
 import Badge from '@mui/material/Badge';
 import { useState } from 'react'
 import OrderDetail from '@/components/OrderDetail'
@@ -28,6 +29,8 @@ export default function Dashboard() {
     const [orderCurrency, setOrderCurrency] = useState("");
     const [orderNum, setOrderNum] = useState("");
     const [badgeInvisibility, setBadgeInvisibility] = useState(false);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [page, setPage] = useState(0);
     const fetcher = async ()=>{ 
         var myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2NjI2NjgwMTEsImlzcyI6ImVLYXJ0IiwiZXhwIjo2LjQ4MDAwMDAwMDAwMDAwMmUrMjQsInN1YiI6ImVLYXJ0IEF1dGhlbnRpY2F0aW9uIn0.B3j6ZUzOa-7XfPvjJ3wvu3eosEw9CN5cWy1yOrv2Ppg");
@@ -63,8 +66,17 @@ export default function Dashboard() {
           date.getFullYear(),
         ].join('-');
       }
-    console.log("today : ", formatDate(new Date()));
 
+    console.log("today : ", formatDate(new Date()));
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orderData?.data.length) : 0;
     const handleOrderDetail = (currency, items, total, order)=>{
         setOrderCurrency(currency);
         setOrderItems(items);
@@ -77,7 +89,7 @@ export default function Dashboard() {
     return(
         <main className={montserrat.className}>
             <Header hasSignedIn={true} />
-            <section className='md:flex md:flex-col md:w-full md:items-center md:pb-8 bg-white'>
+            <section className='md:flex md:flex-col md:w-full md:items-center md:min-h-screen md:pb-8 bg-white'>
                 <div className='w-full md:ml-[10%] md:my-[4%]'>
                     <Resume/>
                 </div>
@@ -95,7 +107,10 @@ export default function Dashboard() {
                                     </TableRow>                                    
                                 </TableHead>
                                 <TableBody className='w-full max-h-[245px] overflow-y-auto'>
-                                {orderData?.data.map((row, idx)=>(
+                                {(rowsPerPage > 0 //orderData?.data
+                                    ? orderData?.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    : orderData?.data
+                                ).map((row, idx)=>(
                                     <TableRow key={idx}>
                                         <TableCell className={`w-[12%] ${montserrat.className} text-base`}>{formatDate(new Date())==row.date_added.split(" ")[0]? <Badge invisible={badgeInvisibility} variant='dot' color='primary' className='mr-2'/>:<></>}{row.id}</TableCell>
                                         <TableCell className={`w-[25%] ${montserrat.className} text-base`}>{row.date_added.split(" ")[0]}</TableCell>
@@ -106,6 +121,15 @@ export default function Dashboard() {
                                 ))}
                                 </TableBody>
                             </Table>
+                            <TablePagination
+                            rowsPerPageOptions={[5, 10, 25]}
+                            component="div"
+                            count={orderData?.data.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}
+                            />
                         </div>
                     </div>
                     <OrderDetail items={orderItems} currency={orderCurrency} total={orderTotal} id={orderNum} />
