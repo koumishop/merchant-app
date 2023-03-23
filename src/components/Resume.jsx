@@ -53,7 +53,7 @@ return(
             </div>
         </Link>
         <div className='md:w-[25%] md:flex md:space-x-2 space-y-2'>
-            <div className='bg-pink-red border border-pinkbg-pink-red w-[57px] h-[57px] flex items-center justify-center rounded-md'><Icon className='text-white' icon="ic:round-account-balance-wallet" width={43} height={43}/></div>
+            <div className='bg-pink-red border border-pink-red w-[57px] h-[57px] flex items-center justify-center rounded-md'><Icon className='text-white' icon="ic:round-account-balance-wallet" width={43} height={43}/></div>
             <div className='w-1/2 text-pink-red'>
                 <h2>Solde</h2>
                 <div className='font-semibold'>{`${kFormatter(parseInt(statsData?.balance))} ${statsData?.currency}`}</div>
