@@ -37,7 +37,7 @@ export default function Product() {
     return(
         <main className={montserrat.className}>
             <Header hasSignedIn={true} />
-            <section className='md:flex md:flex-col md:w-full md:items-start bg-white  md:pb-8'>
+            <section className='md:flex md:flex-col md:w-full md:min-h-screen md:items-start bg-white  md:pb-8'>
                 <div className='w-full md:ml-[5%] md:my-[4%]'>
                     <Resume/>
                 </div>

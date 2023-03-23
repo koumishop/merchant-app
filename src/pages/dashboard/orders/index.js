@@ -108,9 +108,9 @@ export default function Dashboard() {
                                 </TableHead>
                                 <TableBody className='w-full max-h-[245px] overflow-y-auto'>
                                 {!orderData?<TableRow><TableCell>Aucune donnée disponible</TableCell></TableRow> :(rowsPerPage > 0 //orderData?.data
-                                    ? orderData?.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                    ? orderData?.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                     : orderData?.data
-                                ).map((row, idx)=>(
+                                )?.map((row, idx)=>(
                                     <TableRow key={idx}>
                                         <TableCell className={`w-[12%] ${montserrat.className} text-base`}>{formatDate(new Date())==row.date_added.split(" ")[0]? <Badge invisible={badgeInvisibility} variant='dot' color='primary' className='mr-2'/>:<></>}{row.id}</TableCell>
                                         <TableCell className={`w-[25%] ${montserrat.className} text-base`}>{row.date_added.split(" ")[0]}</TableCell>
@@ -124,7 +124,7 @@ export default function Dashboard() {
                             <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={orderData? orderData?.data.length : 0}
+                            count={orderData? orderData?.data?.length : 0}
                             rowsPerPage={rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}
