@@ -44,7 +44,7 @@ export default function Product() {
                 <div className='md:w-[90%] md:ml-[8%] text-dark bg-alt-secondary'>
                     <h2 className='p-4 w-full font-medium'>Produits</h2>
                     <div className='md:w-full md:pb-4 md:flex md:flex-wrap text-dark bg-alt-secondary'>
-                        {productData?.data.map((item, idx)=>(
+                        {!productData?.data?<div className='w-full h-[85Opx]'><Image  src="/images/no_product_yet.png" alt='match-making background' width={300} height={300} /> <span className='py-2'>Vous n'avez pas encore de produit enregistré chez nous</span></div> :productData?.data?.map((item, idx)=>(
                             <div key={idx} className='w-[45%] h-[185px] px-2 py-4 mx-4 mb-2 flex bg-white'>
                                 <div className='w-1/3'><Image loader={myLoader} src={item.image} width={400} height={400} alt="item ordered picture" className='object-cover w-full h-full'/></div>
                                 <div className='w-1/3 pl-2'>
