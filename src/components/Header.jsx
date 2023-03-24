@@ -24,7 +24,7 @@ const handleLogOut = ()=>{
         <Image src="/images/logoKoumi.png" alt='match-making logo' width={52} height={52} />
       </div>
       {hasSignedIn?
-          <div className='w-[60%] md:w-[40%] flex justify-end items-center '>
+          <div className='w-[60%] md:w-[60%] flex justify-end items-center'>
             <Icon icon="mdi:user-circle-outline" color='#FFFFFF' width={35} className='text-white' />
             <div className='text-xs md:text-base md:px-1 flex text-white'><span className='hidden md:flex md:mr-1'>Bonjour </span> <span className='font-extrabold mr-1'>{ user.email }</span>{user.company? <span> - <span className='font-extrabold'>{ ` ${user.company}` }</span></span> : ""}</div>
             <button onClick={handleLogOut} className='flex md:border md:border-secondary md:rounded-xl md:bg-secondary hover:bg-opacity-0 md:px-2 md:ml-4'><span className='hidden md:flex md:text-white'>Déconnexion</span></button>
