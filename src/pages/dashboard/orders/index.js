@@ -124,8 +124,8 @@ export default function Dashboard() {
                             <TablePagination
                             rowsPerPageOptions={[5, 10, 25]}
                             component="div"
-                            count={orderData? orderData?.data?.length : 0}
-                            rowsPerPage={rowsPerPage}
+                            count={orderData?.data? orderData?.data?.length : 0}
+                            rowsPerPage={!rowsPerPage?0:rowsPerPage}
                             page={page}
                             onPageChange={handleChangePage}
                             onRowsPerPageChange={handleChangeRowsPerPage}
