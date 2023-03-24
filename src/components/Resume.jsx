@@ -25,12 +25,10 @@ export default function Resume() {
 
         const response = await fetch("https://webadmin.koumishop.com/seller/api/api-v1.php", requestOptions)
         const data = await response.json();
-        console.log("******** stats : ",data );
         return data;
         
     }
     const {data:statsData, isLoading:isStatsDataLoading} = useQuery(['stats'], ()=>fetcher()) 
-    //console.log("****** statsQuery : ", statsData.data);
 
 return(
     <div className='md:w-1/2 py-4 flex items-center justify-evenly'>
