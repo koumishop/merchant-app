@@ -28,7 +28,6 @@ export default function Product() {
 
         const response = await fetch("https://webadmin.koumishop.com/seller/api/api-v1.php", requestOptions)
         const data = await response.json();
-        console.log("******** products : ",data );
         return data;
         
     }

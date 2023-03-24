@@ -52,20 +52,16 @@ export default function Home() {
       fetch("https://webadmin.koumishop.com/seller/api/api-v1.php", requestOptions)
         .then(response => response.json())
         .then((result)=>{
-          console.log("***** response : ", result);
          const { id, name, store_name, email, balance,} = result.data[0];
           localStorage.setItem("userId",id);
           localStorage.setItem("userEmail",email);
           localStorage.setItem("serviceName",name);
           localStorage.setItem("storeName",store_name);
           localStorage.setItem("isConnected", true)
-          console.log("balance : ", result.data[0].balance);
           router.push('/dashboard/orders');
-
         })
         .catch(error => { 
           setHasError(true);
-          console.log("***** error : ",error );
         });
 
     }

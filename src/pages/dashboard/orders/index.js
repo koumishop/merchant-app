@@ -49,7 +49,6 @@ export default function Dashboard() {
 
         const response = await fetch("https://webadmin.koumishop.com/seller/api/api-v1.php", requestOptions)
         const data = await response.json();
-        console.log("******** orders : ",data );
         return data;
         
     }
@@ -67,7 +66,6 @@ export default function Dashboard() {
         ].join('-');
       }
 
-    console.log("today : ", formatDate(new Date()));
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -83,7 +81,6 @@ export default function Dashboard() {
         setOrderTotal(total);
         setOrderNum(order);
         setBadgeInvisibility(true);
-        console.log("order num : ", order, " items : ", items, " total : ", total, " currency : ", currency);
     }
 
     return(
