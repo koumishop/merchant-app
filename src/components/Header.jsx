@@ -12,7 +12,6 @@ export default function Header({hasSignedIn,}) {
   }, [])
 
 const handleLogOut = ()=>{
-  console.log(`${user.email} logged out`);
   window.localStorage.clear();
   router.push('/');
   

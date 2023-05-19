@@ -73,7 +73,7 @@ export default function Home() {
         <section className='md:flex md:w-full md:h-[92%] md:items-center md:justify-between bg-white'>
           <form className='w-[100%] md:w-1/2 h-[100%] mt-4 p-4 bg-white flex flex-col items-center' autoComplete='off'>
             <h1 className={`${oswald.className}`}>
-              <div className='text-secondary text-5xl md:text-7xl font-bold'>Bienvenu sur</div>
+              <div className='text-secondary text-5xl md:text-7xl font-bold'>Bienvenue sur</div>
               <div className='text-primary text-5xl md:text-7xl font-bold'>Koumi-Merchant</div>
             </h1>
             <Collapse in={hasError}>
